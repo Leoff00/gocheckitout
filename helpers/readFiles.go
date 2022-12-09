@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func ReadFiles(path string) []string {
+func ReadFiles(path string, rChan chan []string) chan []string {
 	var urls []string
 	file, err := os.Open(path)
 
@@ -28,6 +28,8 @@ func ReadFiles(path string) []string {
 		}
 	}
 
-	return urls
+	rChan <- urls
+
+	return rChan
 
 }

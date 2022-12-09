@@ -6,22 +6,22 @@ import (
 
 	"github.com/leoff00/gocheckitout/api"
 	"github.com/leoff00/gocheckitout/helpers"
+	"github.com/leoff00/gocheckitout/logs"
 )
-
-func firstLog() {
-	fmt.Println("Welcome to go Check-it-out, Choose an option to execute the features")
-}
 
 func readOptionCode() int {
 	var code int
 	fmt.Scan(&code)
-	fmt.Println("The code was", code)
 	return code
 }
 
 func main() {
-	firstLog()
-	urls := helpers.ReadFiles("urls.txt")
+
+	logs.WelcomeLog()
+
+	res := make(chan []string)
+	go helpers.ReadFiles("urls.txt", res)
+	urls := <-res
 	readedCode := readOptionCode()
 
 	switch readedCode {
@@ -34,11 +34,11 @@ func main() {
 			api.MakeRequestWithDetails(url)
 		}
 	case 3:
-		fmt.Println("Exiting...")
+		logs.Exiting()
 		os.Exit(0)
 
 	default:
-		fmt.Println("Invalid operation, exiting...")
+		logs.InvalidOperation()
 		os.Exit(-1)
 	}
 
