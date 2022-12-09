@@ -23,8 +23,8 @@ func Requester(url string) (*utils.Custom, error) {
 
 	if err != nil {
 		log.Default().Fatal("Failed to make request...")
-		return &custom, err
+		return nil, err
 	}
 
-	return &custom, err
+	return &custom, nil
 }
