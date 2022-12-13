@@ -4,7 +4,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"time"
 )
 
 // Customize the response with the way that you want
@@ -12,7 +11,8 @@ import (
 type Custom struct {
 	Header     http.Header
 	StatusCode int16
-	Body       *io.ReadCloser
+	RawBody    *io.ReadCloser
+	Body       *[]byte
 	Url        *url.URL
-	Timestamp  time.Time
+	Timestamp  string
 }

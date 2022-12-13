@@ -16,6 +16,7 @@ func ReadFiles(path string, rChan chan []string) chan []string {
 		log.Fatal(err)
 	}
 
+	defer file.Close()
 	buffer := bufio.NewReader(file)
 
 	for {
@@ -29,7 +30,5 @@ func ReadFiles(path string, rChan chan []string) chan []string {
 	}
 
 	rChan <- urls
-
 	return rChan
-
 }
